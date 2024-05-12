@@ -1,6 +1,6 @@
 tinythemer is a C port of BasicThemer5, which was written in Golang.
 Most of the code is based off of it. Also includes a -reverse (case sensitive!)
 command-line argument to revert basic theme changes. As lightweight as
-the original version (125kb, no CPU usage, only ~2MB memory consumption.)
+the original version (125kb, no CPU usage, 4x less memory consumption)
 
 To build, run build.sh under MSYS2/MINGW64.

@@ -7,22 +7,23 @@ int revert = 0;
 
 int setTheme(HWND hwnd, int dwm){
 	BOOL iconic = !dwm;
-	int k = DWMNCRP_DISABLED;
-	if(dwm == 1){
-		k = DWMNCRP_USEWINDOWSTYLE;
+	BOOL enabled = 0;
+	enum DWMNCRENDERINGPOLICY k = (dwm==1) ? DWMNCRP_USEWINDOWSTYLE : DWMNCRP_DISABLED;
+	if(DwmGetWindowAttribute(hwnd, DWMWA_NCRENDERING_ENABLED, &enabled, sizeof(enabled)) != S_OK) return -1;
+	if(dwm != enabled){
+		DwmSetWindowAttribute(
+			hwnd,
+			DWMWA_NCRENDERING_POLICY,
+			&k,
+			sizeof(k)
+		);
+		DwmSetWindowAttribute(
+			hwnd,
+			DWMWA_FORCE_ICONIC_REPRESENTATION,
+			&iconic,
+			sizeof(iconic)
+		);
 	}
-	DwmSetWindowAttribute(
-		hwnd,
-		DWMWA_NCRENDERING_POLICY,
-		&k,
-		sizeof(DWMNCRP_DISABLED)
-	);
-	DwmSetWindowAttribute(
-		hwnd,
-		DWMWA_FORCE_ICONIC_REPRESENTATION,
-		&iconic,
-		sizeof(iconic)
-	);
 	return 0;
 }
 
